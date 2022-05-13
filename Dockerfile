@@ -2,8 +2,17 @@ FROM golang:1.18
 
 WORKDIR /app
 
+RUN groupadd --gid 1000 gouser \
+    && useradd --uid 1000 --gid 1000 -m gouser
+
 COPY . .
 RUN go build -v -o /app/wiki
+
+RUN chown -R gouser:gouser /app \
+    && chmod 770 /app \
+    && chmod 770 /app/wiki
+
+USER gouser
 
 EXPOSE 8080
 
