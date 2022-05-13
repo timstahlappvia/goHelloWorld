@@ -12,7 +12,7 @@ RUN chown -R gouser:gouser /app \
     && chmod 770 /app \
     && chmod 770 /app/wiki
 
-USER gouser
+USER 1000
 
 EXPOSE 8080
 
