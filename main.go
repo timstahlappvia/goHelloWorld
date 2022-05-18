@@ -9,7 +9,7 @@ import (
 )
 
 // Setup the variables.
-var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
+var templates = template.Must(template.ParseFiles("html/edit.html", "html/view.html"))
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
 type Page struct {
@@ -19,12 +19,12 @@ type Page struct {
 
 // Use file operations to load and save the data for the wiki.
 func (p *Page) save() error {
-	filename := p.Title + ".txt"
+	filename := "db/" + p.Title + ".txt"
 	return os.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
+	filename := "db/" + title + ".txt"
 	body, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -85,5 +85,6 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
+	http.Handle("/html/", http.StripPrefix("/html/", http.FileServer(http.Dir("html"))))
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
