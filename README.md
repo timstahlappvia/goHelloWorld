@@ -10,5 +10,3 @@ http://$dnsname/save/$item - Either updates the current item or creates a new fi
 
 
 Exposes over port 8080
-
-Change made during the webinar!
