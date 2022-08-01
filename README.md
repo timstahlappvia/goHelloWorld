@@ -1,4 +1,4 @@
-# Go Training Hello World
+# Go Hello World
 
 ## A small Go application that serves pages based on the URL
 
