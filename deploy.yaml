@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gohw
-  labels:
-    app: gohw
 spec:
   replicas: 1
   selector:
@@ -15,10 +13,11 @@ spec:
         app: gohw
     spec:
       containers:
-      - name: gohw
+      - name: hwapp
         image: tstahlfsu/gohwapp:latest
         ports:
         - containerPort: 8080
+          name: http
 ---
 apiVersion: v1
 kind: Service
@@ -26,8 +25,7 @@ metadata:
   name: gohw-service
 spec:
   type: LoadBalancer
+  ports:
+  - port: 80
   selector:
     app: gohw
-  ports:
-    - port: 80
-      targetPort: 8080
